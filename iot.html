@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>IoT — IIT</title>
+<meta name="description" content="Automatización IoT con ESP32 y sensores industriales en Colombia">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* SHARED IIT STYLES */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #080b10;
+  --accent: #00d4ff;
+  --accent2: #00ffcc;
+  --white: #e8f4f8;
+  --dim: #1a2535;
+  --grid: rgba(0,212,255,0.04);
+  --muted: rgba(232,244,248,0.4);
+}
+body { background: var(--bg); font-family: 'JetBrains Mono', monospace; color: var(--white); min-height: 100vh; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(8,11,16,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,212,255,0.1);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.nav-logo-text { font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; }
+.nav-logo-text span { color: var(--accent); }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.nav-cta { padding: 0.5rem 1.25rem; background: var(--accent); color: var(--bg); font-family: 'Chakra Petch', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); transition: background 0.2s; }
+.nav-cta:hover { background: var(--accent2); }
+
+/* HERO SECTION */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 4rem;
+  background: linear-gradient(var(--grid) 1px,transparent 1px), linear-gradient(90deg,var(--grid) 1px,transparent 1px), var(--bg);
+  background-size: 48px 48px;
+}
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,180,220,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 10; }
+.hero-inner { position: relative; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 1.75rem; padding: 2rem; text-align: center; }
+.corner { position: absolute; width: 20px; height: 20px; border-color: rgba(0,212,255,0.25); border-style: solid; }
+.corner-tl { top:1.5rem;left:1.5rem; border-width:1px 0 0 1px; }
+.corner-tr { top:1.5rem;right:1.5rem; border-width:1px 1px 0 0; }
+.corner-bl { bottom:1.5rem;left:1.5rem; border-width:0 0 1px 1px; }
+.corner-br { bottom:1.5rem;right:1.5rem; border-width:0 1px 1px 0; }
+
+/* TEXTO */
+.hero-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.3em; color:var(--accent); text-transform:uppercase; opacity:0; animation:fadeUp 0.6s ease 2.0s forwards; }
+.hero-title { font-family:'Chakra Petch',sans-serif; font-size:clamp(2rem,5vw,3.8rem); font-weight:700; line-height:1.05; letter-spacing:0.04em; color:var(--white); opacity:0; animation:fadeUp 0.6s ease 2.2s forwards; }
+.hero-title span { color:var(--accent); }
+.hero-sub { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); letter-spacing:0.05em; max-width:440px; line-height:1.9; opacity:0; animation:fadeUp 0.6s ease 2.4s forwards; }
+.hero-cta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; opacity:0; animation:fadeUp 0.6s ease 2.6s forwards; }
+.btn-primary { padding:0.75rem 2rem; background:var(--accent); color:var(--bg); font-family:'Chakra Petch',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; border:none; cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:background 0.2s,transform 0.15s; text-decoration:none; display:inline-block; }
+.btn-primary:hover { background:#00ffee; transform:translateY(-2px); }
+.btn-outline { padding:0.75rem 2rem; background:transparent; color:var(--accent); font-family:'Chakra Petch',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(0,212,255,0.4); cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:border-color 0.2s,color 0.2s,transform 0.15s; text-decoration:none; display:inline-block; }
+.btn-outline:hover { border-color:var(--accent); color:#fff; transform:translateY(-2px); }
+.status-bar { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.55rem; color:rgba(0,212,255,0.4); letter-spacing:0.2em; opacity:0; animation:fadeUp 0.6s ease 3s forwards; white-space:nowrap; }
+.status-dot { width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s ease-in-out infinite; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+@keyframes drawLine { to{stroke-dashoffset:0} }
+@keyframes fadeIn { to{opacity:1} }
+@keyframes popIn { 0%{opacity:0;transform:scale(0)} 70%{transform:scale(1.2)} 100%{opacity:1;transform:scale(1)} }
+
+/* FOOTER */
+footer { background:rgba(0,0,0,0.4); border-top:1px solid rgba(0,212,255,0.08); padding:2rem; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:rgba(0,212,255,0.3); letter-spacing:0.2em; }
+footer a { color:rgba(0,212,255,0.5); text-decoration:none; }
+
+
+.anim-wrap { filter: drop-shadow(0 0 25px rgba(0,212,255,0.2)); }
+.sensor { opacity:0; }
+.s1{animation:fadeIn 0.4s ease 1.2s forwards} .s2{animation:fadeIn 0.4s ease 1.3s forwards}
+.s3{animation:fadeIn 0.4s ease 1.4s forwards} .s4{animation:fadeIn 0.4s ease 1.5s forwards}
+.s5{animation:fadeIn 0.4s ease 1.6s forwards} .s6{animation:fadeIn 0.4s ease 1.7s forwards}
+.slink{animation:drawLine 0.6s ease forwards}
+.sl1{animation-delay:1.2s} .sl2{animation-delay:1.3s} .sl3{animation-delay:1.4s}
+.sl4{animation-delay:1.4s} .sl5{animation-delay:1.5s} .sl6{animation-delay:1.5s}
+.hub,.hub-inner,.hub-ring{opacity:0;}
+.hub       {animation:popIn 0.5s ease 0.4s forwards}
+.hub-inner {animation:popIn 0.3s ease 0.7s forwards}
+.hub-ring  {animation:fadeIn 0.5s ease 0.9s forwards}
+.hub-pulse {opacity:0; animation:hubPulse 2s ease-in-out 2s infinite}
+@keyframes hubPulse{0%{opacity:0.6;r:28px}100%{opacity:0;r:48px}}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" rx="3" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+    <rect x="10" y="10" width="12" height="12" rx="1" fill="none" stroke="#00d4ff" stroke-width="1"/>
+    <circle cx="16" cy="16" r="2" fill="#00d4ff"/>
+    <line x1="6" y1="12" x2="2" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="16" x2="2" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="20" x2="2" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="26" y1="12" x2="30" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="16" x2="30" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="20" x2="30" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="12" y1="6" x2="12" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="6" x2="16" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="6" x2="20" y2="2" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="12" y1="26" x2="12" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="26" x2="16" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="26" x2="20" y2="30" stroke="#00d4ff" stroke-width="1.2"/></svg>
+    <span class="nav-logo-text">IIT<span>.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" >Inicio</a></li>
+    <li><a href="datacenter.html" >Datacenter</a></li>
+    <li><a href="solar.html" >Solar</a></li>
+    <li><a href="redes.html" >Redes</a></li>
+    <li><a href="iot.html" class="active">IoT</a></li>
+    <li><a href="ia.html" >IA</a></li>
+    <li><a href="casos.html" >Casos</a></li>
+  </ul>
+  <a href="mailto:contacto@infraestructura-it.com" class="nav-cta">Contacto</a>
+</nav>
+<section class="hero">
+  <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+  <div class="hero-inner">
+    <div class="anim-wrap"><svg width="340" height="300" viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">
+  <defs><filter id="ig"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <!-- SENSOR LINKS -->
+  <line class="slink sl1" x1="170" y1="150" x2="60"  y2="60"  stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <line class="slink sl2" x1="170" y1="150" x2="280" y2="60"  stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <line class="slink sl3" x1="170" y1="150" x2="40"  y2="180" stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <line class="slink sl4" x1="170" y1="150" x2="300" y2="180" stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <line class="slink sl5" x1="170" y1="150" x2="90"  y2="265" stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <line class="slink sl6" x1="170" y1="150" x2="250" y2="265" stroke="rgba(0,212,255,0.3)" stroke-width="1" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <!-- SENSORS -->
+  <g class="sensor s1">
+    <rect x="40" y="40" width="40" height="40" rx="4" fill="#071520" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+    <text x="60" y="56" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.6)">TEMP</text>
+    <text x="60" y="70" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#00d4ff" font-weight="700">23°C</text>
+    <circle cx="52" cy="46" r="3" fill="#00ff88"/>
+  </g>
+  <g class="sensor s2">
+    <rect x="260" y="40" width="40" height="40" rx="4" fill="#071520" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+    <text x="280" y="56" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.6)">HUM</text>
+    <text x="280" y="70" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#00d4ff" font-weight="700">65%</text>
+    <circle cx="272" cy="46" r="3" fill="#00ff88"/>
+  </g>
+  <g class="sensor s3">
+    <rect x="18" y="160" width="40" height="40" rx="4" fill="#071520" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+    <text x="38" y="176" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.6)">VOLT</text>
+    <text x="38" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#ffcc00" font-weight="700">220V</text>
+    <circle cx="30" cy="166" r="3" fill="#ffcc00"/>
+  </g>
+  <g class="sensor s4">
+    <rect x="282" y="160" width="40" height="40" rx="4" fill="#071520" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+    <text x="302" y="176" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.6)">CO2</text>
+    <text x="302" y="190" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#00ffcc" font-weight="700">410ppm</text>
+    <circle cx="294" cy="166" r="3" fill="#00ffcc"/>
+  </g>
+  <g class="sensor s5">
+    <rect x="68" y="248" width="40" height="40" rx="4" fill="#071520" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+    <text x="88" y="264" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.6)">PRES</text>
+    <text x="88" y="278" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#00d4ff" font-weight="700">1013hPa</text>
+    <circle cx="80" cy="254" r="3" fill="#00ff88"/>
+  </g>
+  <g class="sensor s6">
+    <rect x="232" y="248" width="40" height="40" rx="4" fill="#071520" stroke="rgba(0,212,255,0.5)" stroke-width="1.2"/>
+    <text x="252" y="264" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.6)">LUX</text>
+    <text x="252" y="278" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#ffcc00" font-weight="700">850lx</text>
+    <circle cx="244" cy="254" r="3" fill="#ffcc00"/>
+  </g>
+  <!-- HUB CENTRAL -->
+  <circle class="hub-ring" cx="170" cy="150" r="38" fill="none" stroke="rgba(0,212,255,0.1)" stroke-width="1"/>
+  <circle class="hub-ring" cx="170" cy="150" r="28" fill="none" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+  <circle class="hub"      cx="170" cy="150" r="22" fill="#071520" stroke="rgba(0,212,255,0.7)" stroke-width="1.5" filter="url(#ig)"/>
+  <circle class="hub-inner" cx="170" cy="150" r="10" fill="rgba(0,212,255,0.1)" stroke="var(--accent)" stroke-width="1"/>
+  <text class="hub" x="170" y="147" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.8)" letter-spacing="1">ESP32</text>
+  <text class="hub" x="170" y="158" text-anchor="middle" font-family="JetBrains Mono" font-size="5" fill="rgba(0,212,255,0.5)">MASTER</text>
+  <circle class="hub-pulse" cx="170" cy="150" r="28" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+</svg></div>
+    <p class="hero-label">// IoT · Automatización</p>
+    <h1 class="hero-title">Internet<br>of <span>Things</span></h1>
+    <p class="hero-sub">ESP32 · MQTT · Sensores industriales · Edge AI<br>Dashboards en tiempo real · Alertas inteligentes.</p>
+    <div class="hero-cta">
+      <a href="casos.html" class="btn-primary">Ver proyectos</a>
+      <a href="mailto:contacto@infraestructura-it.com" class="btn-outline">Cotizar</a>
+    </div>
+  </div>
+  <div class="status-bar"><div class="status-dot"></div>ESP32-MASTER · 6 NODOS · MQTT: ACTIVO</div>
+</section>
+<footer>
+  &copy; 2026 INFRAESTRUCTURA-IT &nbsp;·&nbsp; BOGOTÁ, COLOMBIA &nbsp;·&nbsp;
+  <a href="mailto:contacto@infraestructura-it.com">contacto@infraestructura-it.com</a>
+</footer>
+</body>
+</html>

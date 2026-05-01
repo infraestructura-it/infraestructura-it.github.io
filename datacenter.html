@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Datacenter — IIT</title>
+<meta name="description" content="Soluciones profesionales de data center modular para Colombia">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* SHARED IIT STYLES */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #080b10;
+  --accent: #00d4ff;
+  --accent2: #00ffcc;
+  --white: #e8f4f8;
+  --dim: #1a2535;
+  --grid: rgba(0,212,255,0.04);
+  --muted: rgba(232,244,248,0.4);
+}
+body { background: var(--bg); font-family: 'JetBrains Mono', monospace; color: var(--white); min-height: 100vh; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(8,11,16,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,212,255,0.1);
+}
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.nav-logo-text { font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; }
+.nav-logo-text span { color: var(--accent); }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.nav-cta { padding: 0.5rem 1.25rem; background: var(--accent); color: var(--bg); font-family: 'Chakra Petch', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); transition: background 0.2s; }
+.nav-cta:hover { background: var(--accent2); }
+
+/* HERO SECTION */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 4rem;
+  background: linear-gradient(var(--grid) 1px,transparent 1px), linear-gradient(90deg,var(--grid) 1px,transparent 1px), var(--bg);
+  background-size: 48px 48px;
+}
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,180,220,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 10; }
+.hero-inner { position: relative; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 1.75rem; padding: 2rem; text-align: center; }
+.corner { position: absolute; width: 20px; height: 20px; border-color: rgba(0,212,255,0.25); border-style: solid; }
+.corner-tl { top:1.5rem;left:1.5rem; border-width:1px 0 0 1px; }
+.corner-tr { top:1.5rem;right:1.5rem; border-width:1px 1px 0 0; }
+.corner-bl { bottom:1.5rem;left:1.5rem; border-width:0 0 1px 1px; }
+.corner-br { bottom:1.5rem;right:1.5rem; border-width:0 1px 1px 0; }
+
+/* TEXTO */
+.hero-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.3em; color:var(--accent); text-transform:uppercase; opacity:0; animation:fadeUp 0.6s ease 2.0s forwards; }
+.hero-title { font-family:'Chakra Petch',sans-serif; font-size:clamp(2rem,5vw,3.8rem); font-weight:700; line-height:1.05; letter-spacing:0.04em; color:var(--white); opacity:0; animation:fadeUp 0.6s ease 2.2s forwards; }
+.hero-title span { color:var(--accent); }
+.hero-sub { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); letter-spacing:0.05em; max-width:440px; line-height:1.9; opacity:0; animation:fadeUp 0.6s ease 2.4s forwards; }
+.hero-cta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; opacity:0; animation:fadeUp 0.6s ease 2.6s forwards; }
+.btn-primary { padding:0.75rem 2rem; background:var(--accent); color:var(--bg); font-family:'Chakra Petch',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; border:none; cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:background 0.2s,transform 0.15s; text-decoration:none; display:inline-block; }
+.btn-primary:hover { background:#00ffee; transform:translateY(-2px); }
+.btn-outline { padding:0.75rem 2rem; background:transparent; color:var(--accent); font-family:'Chakra Petch',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(0,212,255,0.4); cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:border-color 0.2s,color 0.2s,transform 0.15s; text-decoration:none; display:inline-block; }
+.btn-outline:hover { border-color:var(--accent); color:#fff; transform:translateY(-2px); }
+.status-bar { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.55rem; color:rgba(0,212,255,0.4); letter-spacing:0.2em; opacity:0; animation:fadeUp 0.6s ease 3s forwards; white-space:nowrap; }
+.status-dot { width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s ease-in-out infinite; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+@keyframes drawLine { to{stroke-dashoffset:0} }
+@keyframes fadeIn { to{opacity:1} }
+@keyframes popIn { 0%{opacity:0;transform:scale(0)} 70%{transform:scale(1.2)} 100%{opacity:1;transform:scale(1)} }
+
+/* FOOTER */
+footer { background:rgba(0,0,0,0.4); border-top:1px solid rgba(0,212,255,0.08); padding:2rem; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:rgba(0,212,255,0.3); letter-spacing:0.2em; }
+footer a { color:rgba(0,212,255,0.5); text-decoration:none; }
+
+
+.anim-wrap { filter: drop-shadow(0 0 28px rgba(0,212,255,0.3)); }
+.rack-frame { opacity:0; animation: fadeIn 0.5s ease 0.3s forwards; }
+.srv { opacity:0; }
+.srv:nth-child(4)  { animation: fadeIn 0.3s ease 0.6s forwards; }
+.srv:nth-child(5)  { animation: fadeIn 0.3s ease 0.75s forwards; }
+.srv:nth-child(6)  { animation: fadeIn 0.3s ease 0.9s forwards; }
+.srv:nth-child(7)  { animation: fadeIn 0.3s ease 1.05s forwards; }
+.srv:nth-child(8)  { animation: fadeIn 0.3s ease 1.2s forwards; }
+.srv:nth-child(9)  { animation: fadeIn 0.3s ease 1.35s forwards; }
+.srv:nth-child(10) { animation: fadeIn 0.3s ease 1.5s forwards; }
+.srv:nth-child(11) { animation: fadeIn 0.4s ease 1.65s forwards; }
+.led { opacity:0; }
+.led1 { animation: ledBlink 0.2s ease 1.8s forwards, pulse 2s 2s infinite; }
+.led2 { animation: ledBlink 0.2s ease 1.9s forwards, pulse 2.3s 2s infinite; }
+.led3 { animation: ledBlink 0.2s ease 2.0s forwards, pulse 1.8s 2s infinite; }
+.led4 { animation: ledBlink 0.2s ease 2.1s forwards, pulse 2.5s 2s infinite; }
+.led5 { animation: ledBlink 0.2s ease 2.2s forwards, pulse 2.1s 2s infinite; }
+.led6 { animation: ledBlink 0.2s ease 2.3s forwards, pulse 1.9s 2s infinite; }
+.led7 { animation: ledBlink 0.2s ease 2.4s forwards, pulse 3s 2s infinite; }
+.bar  { opacity:0; animation: fadeIn 0.4s ease 1.7s forwards; }
+.cable { opacity:0; animation: fadeIn 0.6s ease 1.9s forwards; }
+@keyframes ledBlink { to { opacity:1; } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" rx="3" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+    <rect x="10" y="10" width="12" height="12" rx="1" fill="none" stroke="#00d4ff" stroke-width="1"/>
+    <circle cx="16" cy="16" r="2" fill="#00d4ff"/>
+    <line x1="6" y1="12" x2="2" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="16" x2="2" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="20" x2="2" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="26" y1="12" x2="30" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="16" x2="30" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="20" x2="30" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="12" y1="6" x2="12" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="6" x2="16" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="6" x2="20" y2="2" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="12" y1="26" x2="12" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="26" x2="16" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="26" x2="20" y2="30" stroke="#00d4ff" stroke-width="1.2"/></svg>
+    <span class="nav-logo-text">IIT<span>.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" >Inicio</a></li>
+    <li><a href="datacenter.html" class="active">Datacenter</a></li>
+    <li><a href="solar.html" >Solar</a></li>
+    <li><a href="redes.html" >Redes</a></li>
+    <li><a href="iot.html" >IoT</a></li>
+    <li><a href="ia.html" >IA</a></li>
+    <li><a href="casos.html" >Casos</a></li>
+  </ul>
+  <a href="mailto:contacto@infraestructura-it.com" class="nav-cta">Contacto</a>
+</nav>
+<section class="hero">
+  <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div><div class="corner corner-br"></div>
+  <div class="hero-inner">
+    <div class="anim-wrap"><svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rackGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1e30"/>
+      <stop offset="100%" stop-color="#050810"/>
+    </linearGradient>
+    <filter id="glow2"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <!-- RACK FRAME -->
+  <rect class="rack-frame" x="80" y="20" width="160" height="260" rx="4" fill="url(#rackGrad)" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
+  <rect class="rack-frame" x="86" y="26" width="148" height="248" rx="2" fill="none" stroke="rgba(0,212,255,0.1)" stroke-width="1"/>
+  <!-- RAILS -->
+  <rect class="rack-frame" x="88" y="20" width="8" height="260" fill="rgba(0,212,255,0.06)"/>
+  <rect class="rack-frame" x="224" y="20" width="8" height="260" fill="rgba(0,212,255,0.06)"/>
+  <!-- SERVERS (8 units) -->
+  <rect class="srv" x="96" y="32"  width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
+  <rect class="srv" x="96" y="60"  width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
+  <rect class="srv" x="96" y="88"  width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.35)" stroke-width="1"/>
+  <rect class="srv" x="96" y="116" width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.35)" stroke-width="1"/>
+  <rect class="srv" x="96" y="144" width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <rect class="srv" x="96" y="172" width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <rect class="srv" x="96" y="200" width="128" height="24" rx="2" fill="#0a1628" stroke="rgba(0,212,255,0.25)" stroke-width="1"/>
+  <!-- SWITCH -->
+  <rect class="srv" x="96" y="228" width="128" height="40" rx="2" fill="#071520" stroke="rgba(0,255,200,0.5)" stroke-width="1.5"/>
+  <text x="160" y="252" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="rgba(0,255,200,0.7)" letter-spacing="2">CORE SWITCH</text>
+  <!-- LEDS -->
+  <circle class="led led1" cx="108" cy="44"  r="3" fill="#00d4ff"/>
+  <circle class="led led2" cx="108" cy="72"  r="3" fill="#00d4ff"/>
+  <circle class="led led3" cx="108" cy="100" r="3" fill="#00ff88"/>
+  <circle class="led led4" cx="108" cy="128" r="3" fill="#00d4ff"/>
+  <circle class="led led5" cx="108" cy="156" r="3" fill="#00ff88"/>
+  <circle class="led led6" cx="108" cy="184" r="3" fill="#00d4ff"/>
+  <circle class="led led7" cx="108" cy="212" r="3" fill="#ffaa00"/>
+  <!-- BARS -->
+  <rect class="bar" x="120" y="38"  width="60" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <rect class="bar" x="120" y="66"  width="80" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <rect class="bar" x="120" y="94"  width="50" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <rect class="bar" x="120" y="122" width="70" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <rect class="bar" x="120" y="150" width="40" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <rect class="bar" x="120" y="178" width="90" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <rect class="bar" x="120" y="206" width="55" height="4" rx="1" fill="rgba(0,212,255,0.15)"/>
+  <!-- CABLES right side -->
+  <path class="cable" d="M224,44 Q260,44 260,150 Q260,256 224,256" fill="none" stroke="rgba(0,212,255,0.2)" stroke-width="2"/>
+  <path class="cable" d="M224,72 Q255,72 255,150 Q255,248 224,248" fill="none" stroke="rgba(0,255,200,0.15)" stroke-width="2"/>
+  <!-- LABEL -->
+  <text x="160" y="285" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="rgba(0,212,255,0.4)" letter-spacing="2">IIT-DC-RACK-01</text>
+</svg></div>
+    <p class="hero-label">// Infraestructura · Cómputo Crítico</p>
+    <h1 class="hero-title">Data<span>center</span><br>Modular</h1>
+    <p class="hero-sub">Racks certificados · UPS · Climatización · DCIM<br>Diseño, instalación y monitoreo 24/7.</p>
+    <div class="hero-cta">
+      <a href="casos.html" class="btn-primary">Ver proyectos</a>
+      <a href="mailto:contacto@infraestructura-it.com" class="btn-outline">Cotizar</a>
+    </div>
+  </div>
+  <div class="status-bar"><div class="status-dot"></div>RACK-01 ONLINE · 32 SERVERS · 99.9% UPTIME</div>
+</section>
+<footer>
+  &copy; 2026 INFRAESTRUCTURA-IT &nbsp;·&nbsp; BOGOTÁ, COLOMBIA &nbsp;·&nbsp;
+  <a href="mailto:contacto@infraestructura-it.com">contacto@infraestructura-it.com</a>
+</footer>
+</body>
+</html>

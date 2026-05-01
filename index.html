@@ -331,9 +331,35 @@
   .corner-tr { top: 1.5rem; right: 1.5rem; border-width: 1px 1px 0 0; }
   .corner-bl { bottom: 1.5rem; left: 1.5rem; border-width: 0 0 1px 1px; }
   .corner-br { bottom: 1.5rem; right: 1.5rem; border-width: 0 1px 1px 0; }
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(8,11,16,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,212,255,0.1);}
+
 </style>
 </head>
 <body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" rx="3" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
+    <rect x="10" y="10" width="12" height="12" rx="1" fill="none" stroke="#00d4ff" stroke-width="1"/>
+    <circle cx="16" cy="16" r="2" fill="#00d4ff"/>
+    <line x1="6" y1="12" x2="2" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="16" x2="2" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="20" x2="2" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="26" y1="12" x2="30" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="16" x2="30" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="20" x2="30" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="12" y1="6" x2="12" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="6" x2="16" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="6" x2="20" y2="2" stroke="#00d4ff" stroke-width="1.2"/>
+    <line x1="12" y1="26" x2="12" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="26" x2="16" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="26" x2="20" y2="30" stroke="#00d4ff" stroke-width="1.2"/></svg>
+    <span style="font-family:Chakra Petch,sans-serif;font-size:1rem;font-weight:700;color:#e8f4f8;letter-spacing:0.05em">IIT<span style="color:#00d4ff">.</span></span>
+  </a>
+  <ul style="display:flex;gap:1.5rem;list-style:none">
+    <li><a href="index.html"      style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:#00d4ff;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">Inicio</a></li>
+    <li><a href="datacenter.html" style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:rgba(232,244,248,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">Datacenter</a></li>
+    <li><a href="solar.html"      style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:rgba(232,244,248,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">Solar</a></li>
+    <li><a href="redes.html"      style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:rgba(232,244,248,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">Redes</a></li>
+    <li><a href="iot.html"        style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:rgba(232,244,248,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">IoT</a></li>
+    <li><a href="ia.html"         style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:rgba(232,244,248,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">IA</a></li>
+    <li><a href="casos.html"      style="font-family:JetBrains Mono,monospace;font-size:0.65rem;color:rgba(232,244,248,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">Casos</a></li>
+  </ul>
+  <a href="mailto:contacto@infraestructura-it.com" style="padding:0.5rem 1.25rem;background:#00d4ff;color:#080b10;font-family:Chakra Petch,sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)">Contacto</a>
+</nav>
+
 
 <section class="hero">
   <div class="corner corner-tl"></div>
@@ -509,5 +535,9 @@
   </div>
 </section>
 
+<footer style="background:rgba(0,0,0,0.4);border-top:1px solid rgba(0,212,255,0.08);padding:2rem;text-align:center;font-family:JetBrains Mono,monospace;font-size:0.6rem;color:rgba(0,212,255,0.3);letter-spacing:0.2em">
+  &copy; 2026 INFRAESTRUCTURA-IT &nbsp;·&nbsp; BOGOTÁ, COLOMBIA &nbsp;·&nbsp;
+  <a href="mailto:contacto@infraestructura-it.com" style="color:rgba(0,212,255,0.5);text-decoration:none">contacto@infraestructura-it.com</a>
+</footer>
 </body>
 </html>
