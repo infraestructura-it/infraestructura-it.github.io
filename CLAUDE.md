@@ -139,7 +139,7 @@ Cada página tiene `<title>`, `<meta description>` y `<meta keywords>` con térm
 |---|---|---|
 | #1 | Schema.org `LocalBusiness` + `Service` en todas las páginas | Alta |
 | #2 | Fichas reales en `casos.html` (Proarques, JVTEL, etc.) | Alta |
-| #3 | Logo nav inline en `index.html` y `casos.html` | Alta |
+| #3 | ~~Logo nav inline en `index.html` y `casos.html`~~ — **CERRADO** | ✅ |
 | #4 | `og-image.png` 1200×630 usando `logo-iit-core.svg` | Media |
 | #5 | Sección testimonios en homepage | Media |
 | #6 | Formulario contacto funcional (Formspree) | Media |
@@ -149,6 +149,12 @@ Cada página tiene `<title>`, `<meta description>` y `<meta keywords>` con térm
 ---
 
 ## Historial de cambios
+
+### v2.2 — 2026-06-26
+- **fix:** Nav de páginas de servicio unificado con index — agrega Chatbot y Blog, logo texto "Infraestructura-IT"
+- **fix:** `casos.html` creado con card Proarques linkeando a `infraestructura-it.com/caso-exito-solar-offgrid-proarques/`
+- **fix:** Logo del nav = texto simple "Infraestructura-**IT**" (no SVG) — coherente con index, punto 4 respetado
+- **chore:** CLAUDE.md v2.2
 
 ### v2.1 — 2026-06-26
 - **feat:** Logo IIT-CORE chip SVG 1080×1080 con leyenda `infraestructura-it.com` (`logo-iit-core.svg`)

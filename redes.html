@@ -12,7 +12,7 @@
     html{scroll-behavior:smooth;}
     body{background:var(--bg);color:var(--text);font-family:'Syne','Space Mono','DM Mono',system-ui,sans-serif;line-height:1.6;}
     nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.75rem 2rem;background:rgba(8,11,16,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-    .nav-logo{display:flex;align-items:center;text-decoration:none;line-height:0;}.nav-logo:hover{opacity:.85;}
+    .nav-logo{font-size:1rem;font-weight:700;letter-spacing:.02em;color:var(--text);text-decoration:none;}.nav-logo:hover{opacity:.85;}.nav-chatbot{border:1px solid var(--cyan)!important;padding:.2rem .6rem!important;border-radius:2px;}
     .nav-links{display:flex;gap:1.5rem;list-style:none;}
     .nav-links a{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
     .nav-links a:hover,.nav-links a.active{color:var(--cyan);}
@@ -82,7 +82,7 @@
 <body>
 
 <nav>
-  <a href="/index.html" class="nav-logo" aria-label="Infraestructura-IT — Inicio"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 44" width="200" height="32" style="display:block;"><rect width="260" height="44" fill="#080b10"/><rect x="4" y="8" width="28" height="28" rx="4" fill="#0d1520" stroke="#00d4ff" stroke-width="1.2"/><line x1="11" y1="8" x2="11" y2="3" stroke="#00d4ff" stroke-width="1"/><line x1="18" y1="8" x2="18" y2="3" stroke="#00d4ff" stroke-width="1"/><line x1="25" y1="8" x2="25" y2="3" stroke="#00d4ff" stroke-width="1"/><line x1="11" y1="36" x2="11" y2="41" stroke="#00d4ff" stroke-width="1"/><line x1="18" y1="36" x2="18" y2="41" stroke="#00d4ff" stroke-width="1"/><line x1="25" y1="36" x2="25" y2="41" stroke="#00d4ff" stroke-width="1"/><line x1="4" y1="16" x2="1" y2="16" stroke="#00d4ff" stroke-width="1"/><line x1="4" y1="28" x2="1" y2="28" stroke="#10b981" stroke-width="1"/><line x1="32" y1="16" x2="35" y2="16" stroke="#00d4ff" stroke-width="1"/><line x1="32" y1="28" x2="35" y2="28" stroke="#10b981" stroke-width="1"/><rect x="10" y="14" width="16" height="16" rx="3" fill="#061218" stroke="#00d4ff" stroke-width="1"/><circle cx="18" cy="22" r="4" fill="none" stroke="#00d4ff" stroke-width="1"/><circle cx="18" cy="22" r="1.5" fill="#00d4ff"/><line x1="42" y1="8" x2="42" y2="36" stroke="#1e2d42" stroke-width="1"/><text x="52" y="30" font-family="Space Mono,Courier New,monospace" font-size="20" font-weight="700" fill="#e2e8f0" letter-spacing="-0.5">I<tspan fill="#00d4ff">I</tspan>T</text><line x1="96" y1="8" x2="96" y2="36" stroke="#1e2d42" stroke-width="1"/><text x="104" y="20" font-family="Space Mono,Courier New,monospace" font-size="7" fill="#64748b" letter-spacing="2">INFRAESTRUCTURA</text><text x="104" y="32" font-family="Space Mono,Courier New,monospace" font-size="7" fill="#00d4ff" letter-spacing="3">IT · BOGOTÁ</text><circle cx="248" cy="22" r="3" fill="#00d4ff"/></svg></a>
+  <a href="/index.html" class="nav-logo" aria-label="Infraestructura-IT">Infraestructura-<span style="color:var(--cyan)">IT</span></a>
   <ul class="nav-links">
     <li><a href="/index.html">Inicio</a></li>
     <li><a href="/datacenter.html">Datacenter</a></li>
@@ -91,6 +91,8 @@
     <li><a href="/iot.html">IoT</a></li>
     <li><a href="/ia.html">IA</a></li>
     <li><a href="/casos.html">Casos</a></li>
+    <li><a href="http://infraestructura-it.com/iit-chatbot/" class="nav-chatbot">Chatbot</a></li>
+    <li><a href="https://infraestructura-it.github.io/webcorporativa/">Blog</a></li>
   </ul>
   <a href="mailto:contacto@infraestructura-it.com" class="nav-cta">Contacto</a>
 </nav>
