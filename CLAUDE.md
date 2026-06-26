@@ -150,6 +150,12 @@ Cada página tiene `<title>`, `<meta description>` y `<meta keywords>` con térm
 
 ## Historial de cambios
 
+### v2.3 — 2026-06-26
+- **feat:** `index.html` rediseñado — estilo Supabase: grid 3 cols, cards con ilustraciones animadas por servicio
+- **feat:** Chip parpadeante DC, curva solar animada, pulso IoT, código IA en vivo, timeline Casos
+- **feat:** Ticker de estado en tiempo real + stats bar + hero limpio
+- **chore:** CLAUDE.md v2.3
+
 ### v2.2 — 2026-06-26
 - **fix:** Nav de páginas de servicio unificado con index — agrega Chatbot y Blog, logo texto "Infraestructura-IT"
 - **fix:** `casos.html` creado con card Proarques linkeando a `infraestructura-it.com/caso-exito-solar-offgrid-proarques/`
