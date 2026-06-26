@@ -1,190 +1,235 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Redes — IIT</title>
-<meta name="description" content="Diseño e implementación de redes empresariales en Colombia">
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-/* SHARED IIT STYLES */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #080b10;
-  --accent: #00d4ff;
-  --accent2: #00ffcc;
-  --white: #e8f4f8;
-  --dim: #1a2535;
-  --grid: rgba(0,212,255,0.04);
-  --muted: rgba(232,244,248,0.4);
-}
-body { background: var(--bg); font-family: 'JetBrains Mono', monospace; color: var(--white); min-height: 100vh; overflow-x: hidden; }
-
-/* NAV */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 2rem;
-  background: rgba(8,11,16,0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,212,255,0.1);
-}
-.nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-.nav-logo-text { font-family: 'Chakra Petch', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; }
-.nav-logo-text span { color: var(--accent); }
-.nav-links { display: flex; gap: 1.5rem; list-style: none; }
-.nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
-.nav-links a:hover, .nav-links a.active { color: var(--accent); }
-.nav-cta { padding: 0.5rem 1.25rem; background: var(--accent); color: var(--bg); font-family: 'Chakra Petch', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); transition: background 0.2s; }
-.nav-cta:hover { background: var(--accent2); }
-
-/* HERO SECTION */
-.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 4rem;
-  background: linear-gradient(var(--grid) 1px,transparent 1px), linear-gradient(90deg,var(--grid) 1px,transparent 1px), var(--bg);
-  background-size: 48px 48px;
-}
-.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,180,220,0.07) 0%, transparent 70%); pointer-events: none; }
-.hero::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 10; }
-.hero-inner { position: relative; z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 1.75rem; padding: 2rem; text-align: center; }
-.corner { position: absolute; width: 20px; height: 20px; border-color: rgba(0,212,255,0.25); border-style: solid; }
-.corner-tl { top:1.5rem;left:1.5rem; border-width:1px 0 0 1px; }
-.corner-tr { top:1.5rem;right:1.5rem; border-width:1px 1px 0 0; }
-.corner-bl { bottom:1.5rem;left:1.5rem; border-width:0 0 1px 1px; }
-.corner-br { bottom:1.5rem;right:1.5rem; border-width:0 1px 1px 0; }
-
-/* TEXTO */
-.hero-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.3em; color:var(--accent); text-transform:uppercase; opacity:0; animation:fadeUp 0.6s ease 2.0s forwards; }
-.hero-title { font-family:'Chakra Petch',sans-serif; font-size:clamp(2rem,5vw,3.8rem); font-weight:700; line-height:1.05; letter-spacing:0.04em; color:var(--white); opacity:0; animation:fadeUp 0.6s ease 2.2s forwards; }
-.hero-title span { color:var(--accent); }
-.hero-sub { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); letter-spacing:0.05em; max-width:440px; line-height:1.9; opacity:0; animation:fadeUp 0.6s ease 2.4s forwards; }
-.hero-cta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; opacity:0; animation:fadeUp 0.6s ease 2.6s forwards; }
-.btn-primary { padding:0.75rem 2rem; background:var(--accent); color:var(--bg); font-family:'Chakra Petch',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; border:none; cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:background 0.2s,transform 0.15s; text-decoration:none; display:inline-block; }
-.btn-primary:hover { background:#00ffee; transform:translateY(-2px); }
-.btn-outline { padding:0.75rem 2rem; background:transparent; color:var(--accent); font-family:'Chakra Petch',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; border:1px solid rgba(0,212,255,0.4); cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:border-color 0.2s,color 0.2s,transform 0.15s; text-decoration:none; display:inline-block; }
-.btn-outline:hover { border-color:var(--accent); color:#fff; transform:translateY(-2px); }
-.status-bar { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:0.5rem; font-family:'JetBrains Mono',monospace; font-size:0.55rem; color:rgba(0,212,255,0.4); letter-spacing:0.2em; opacity:0; animation:fadeUp 0.6s ease 3s forwards; white-space:nowrap; }
-.status-dot { width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s ease-in-out infinite; }
-
-/* ANIMATIONS */
-@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-@keyframes drawLine { to{stroke-dashoffset:0} }
-@keyframes fadeIn { to{opacity:1} }
-@keyframes popIn { 0%{opacity:0;transform:scale(0)} 70%{transform:scale(1.2)} 100%{opacity:1;transform:scale(1)} }
-
-/* FOOTER */
-footer { background:rgba(0,0,0,0.4); border-top:1px solid rgba(0,212,255,0.08); padding:2rem; text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:rgba(0,212,255,0.3); letter-spacing:0.2em; }
-footer a { color:rgba(0,212,255,0.5); text-decoration:none; }
-
-
-.anim-wrap { filter: drop-shadow(0 0 30px rgba(0,212,255,0.25)); }
-.link { animation: drawLine 0.6s ease forwards; }
-.lk1{animation-delay:0.5s} .lk2{animation-delay:0.6s} .lk3{animation-delay:0.9s}
-.lk4{animation-delay:1.0s} .lk5{animation-delay:1.0s} .lk6{animation-delay:0.9s} .lk7{animation-delay:1.2s}
-.node { opacity:0; }
-.core       { animation: popIn 0.4s ease 0.3s forwards; }
-.core-inner { animation: popIn 0.3s ease 0.5s forwards; }
-.core-dot   { animation: popIn 0.2s ease 0.6s forwards; }
-.n3 { animation: popIn 0.3s ease 0.8s forwards; }
-.n4 { animation: popIn 0.3s ease 0.8s forwards; }
-.n5 { animation: popIn 0.25s ease 1.2s forwards; }
-.n6 { animation: popIn 0.25s ease 1.3s forwards; }
-.n7 { animation: popIn 0.25s ease 1.3s forwards; }
-.n8 { animation: popIn 0.25s ease 1.2s forwards; }
-.lbl { opacity:0; animation: fadeIn 0.4s ease 1.5s forwards; }
-.packet { opacity:0; }
-.pk1 { animation: pktMove1 2s ease-in-out 2s infinite; }
-.pk2 { animation: pktMove2 2.5s ease-in-out 2.3s infinite; }
-@keyframes pktMove1 {
-  0%  { opacity:0; transform:translate(170px,90px); }
-  10% { opacity:1; }
-  50% { opacity:1; transform:translate(80px,150px); }
-  90% { opacity:1; transform:translate(60px,230px); }
-  100%{ opacity:0; transform:translate(60px,230px); }
-}
-@keyframes pktMove2 {
-  0%  { opacity:0; transform:translate(170px,90px); }
-  10% { opacity:1; }
-  50% { opacity:1; transform:translate(260px,150px); }
-  90% { opacity:1; transform:translate(290px,230px); }
-  100%{ opacity:0; transform:translate(290px,230px); }
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Redes LAN, WAN y WiFi empresarial para Colombia. Cableado estructurado Cat6A, switching Cisco/Ubiquiti, SD-WAN, firewall y soporte NOC 24/7. IIT Bogotá.">
+  <meta name="keywords" content="redes empresariales Colombia, cableado estructurado Bogotá, WiFi empresarial, firewall Fortinet, Cisco switching, SD-WAN Colombia">
+  <title>Redes Empresariales — IIT</title>
+  <style>
+    :root{--bg:#080b10;--surface:#0e1420;--card:#131b28;--border:#1e2d42;--cyan:#00d4ff;--cyan-dim:#0099bb;--green:#10b981;--purple:#7c3aed;--amber:#f59e0b;--text:#e2e8f0;--muted:#64748b;--dim:#334155;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'Syne','Space Mono','DM Mono',system-ui,sans-serif;line-height:1.6;}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.75rem 2rem;background:rgba(8,11,16,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+    .nav-logo{display:flex;align-items:center;text-decoration:none;line-height:0;}.nav-logo:hover{opacity:.85;}
+    .nav-links{display:flex;gap:1.5rem;list-style:none;}
+    .nav-links a{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--cyan);}
+    .nav-cta{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:.45rem 1.1rem;border:1px solid var(--cyan);color:var(--cyan);text-decoration:none;border-radius:2px;transition:background .2s,color .2s;}
+    .nav-cta:hover{background:var(--cyan);color:var(--bg);}
+    .hero{position:relative;overflow:hidden;padding:5rem 2rem 4rem;border-bottom:1px solid var(--border);}
+    .hero-chip{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);border:1px solid rgba(16,185,129,.4);padding:.3rem .8rem;border-radius:2px;margin-bottom:1.5rem;}
+    .hero-chip::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease-in-out infinite;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-bottom:1rem;}
+    .hero h1 em{font-style:normal;color:var(--green);}
+    .hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;margin-bottom:2rem;line-height:1.7;}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-primary{padding:.75rem 1.8rem;background:var(--green);color:var(--bg);font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s;}
+    .btn-primary:hover{opacity:.85;}
+    .btn-outline{padding:.75rem 1.8rem;border:1px solid var(--border);color:var(--text);font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:border-color .2s;}
+    .btn-outline:hover{border-color:var(--green);color:var(--green);}
+    .hero-status{margin-top:2.5rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+    .hero-status span{color:var(--green);}
+    .hero-grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:.25;}
+    .hero-grid-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 50%,rgba(16,185,129,.06) 0%,transparent 70%);}
+    .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
+    .stat-item{padding:1.5rem 2rem;border-right:1px solid var(--border);}
+    .stat-item:last-child{border-right:none;}
+    .stat-num{font-size:1.8rem;font-weight:800;color:var(--green);letter-spacing:-.02em;line-height:1;}
+    .stat-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:.3rem;}
+    section{padding:4rem 2rem;border-bottom:1px solid var(--border);}
+    .section-tag{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:.75rem;}
+    .section-title{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.75rem;}
+    .section-sub{font-size:1rem;color:var(--muted);max-width:560px;line-height:1.7;}
+    .section-head{margin-bottom:3rem;}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+    .svc-card{background:var(--card);padding:2rem;transition:background .2s;}
+    .svc-card:hover{background:#172030;}
+    .svc-icon{width:40px;height:40px;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:4px;font-size:1.2rem;}
+    .svc-card h3{font-size:1rem;font-weight:700;letter-spacing:.02em;margin-bottom:.6rem;}
+    .svc-card p{font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+    .svc-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+    .tag{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border:1px solid var(--dim);color:var(--muted);border-radius:2px;}
+    .tag.accent{border-color:rgba(16,185,129,.4);color:var(--green);}
+    .brands-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-top:2rem;}
+    .brand-pill{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border:1px solid var(--border);color:var(--muted);border-radius:2px;background:var(--surface);}
+    .proceso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+    .proceso-item{background:var(--card);padding:1.75rem 1.5rem;}
+    .proceso-num{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:.6rem;}
+    .proceso-item h4{font-size:.95rem;font-weight:700;margin-bottom:.5rem;}
+    .proceso-item p{font-size:.82rem;color:var(--muted);line-height:1.6;}
+    .specs-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+    .specs-table th{text-align:left;padding:.75rem 1rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);}
+    .specs-table td{padding:.85rem 1rem;border-bottom:1px solid var(--border);}
+    .specs-table tr:last-child td{border-bottom:none;}
+    .specs-table td:first-child{color:var(--muted);}
+    .specs-table td .val{color:var(--green);font-family:'Space Mono',monospace;}
+    .specs-table tr:hover td{background:var(--surface);}
+    .cta-block{background:var(--surface);border:1px solid var(--border);padding:3rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;border-radius:2px;}
+    .cta-block h3{font-size:1.5rem;font-weight:800;margin-bottom:.5rem;}
+    .cta-block p{color:var(--muted);font-size:.95rem;}
+    .cta-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+    footer{padding:1.25rem 2rem;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+    footer a{color:var(--muted);text-decoration:none;}
+    footer a:hover{color:var(--green);}
+    @media(max-width:768px){nav{padding:.75rem 1rem;}.nav-links{display:none;}section{padding:3rem 1rem;}.stats-bar{grid-template-columns:repeat(2,1fr);}.stat-item:nth-child(2){border-right:none;}.cta-block{flex-direction:column;}}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <nav>
-  <a href="index.html" class="nav-logo">
-    <svg width="32" height="32" viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" rx="3" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-    <rect x="10" y="10" width="12" height="12" rx="1" fill="none" stroke="#00d4ff" stroke-width="1"/>
-    <circle cx="16" cy="16" r="2" fill="#00d4ff"/>
-    <line x1="6" y1="12" x2="2" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="16" x2="2" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="6" y1="20" x2="2" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
-    <line x1="26" y1="12" x2="30" y2="12" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="16" x2="30" y2="16" stroke="#00d4ff" stroke-width="1.2"/><line x1="26" y1="20" x2="30" y2="20" stroke="#00d4ff" stroke-width="1.2"/>
-    <line x1="12" y1="6" x2="12" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="6" x2="16" y2="2" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="6" x2="20" y2="2" stroke="#00d4ff" stroke-width="1.2"/>
-    <line x1="12" y1="26" x2="12" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="16" y1="26" x2="16" y2="30" stroke="#00d4ff" stroke-width="1.2"/><line x1="20" y1="26" x2="20" y2="30" stroke="#00d4ff" stroke-width="1.2"/></svg>
-    <span class="nav-logo-text">Infraestructura<span>-IT</span></span>
-  </a>
+  <a href="/index.html" class="nav-logo" aria-label="Infraestructura-IT — Inicio"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 44" width="200" height="32" style="display:block;"><rect width="260" height="44" fill="#080b10"/><rect x="4" y="8" width="28" height="28" rx="4" fill="#0d1520" stroke="#00d4ff" stroke-width="1.2"/><line x1="11" y1="8" x2="11" y2="3" stroke="#00d4ff" stroke-width="1"/><line x1="18" y1="8" x2="18" y2="3" stroke="#00d4ff" stroke-width="1"/><line x1="25" y1="8" x2="25" y2="3" stroke="#00d4ff" stroke-width="1"/><line x1="11" y1="36" x2="11" y2="41" stroke="#00d4ff" stroke-width="1"/><line x1="18" y1="36" x2="18" y2="41" stroke="#00d4ff" stroke-width="1"/><line x1="25" y1="36" x2="25" y2="41" stroke="#00d4ff" stroke-width="1"/><line x1="4" y1="16" x2="1" y2="16" stroke="#00d4ff" stroke-width="1"/><line x1="4" y1="28" x2="1" y2="28" stroke="#10b981" stroke-width="1"/><line x1="32" y1="16" x2="35" y2="16" stroke="#00d4ff" stroke-width="1"/><line x1="32" y1="28" x2="35" y2="28" stroke="#10b981" stroke-width="1"/><rect x="10" y="14" width="16" height="16" rx="3" fill="#061218" stroke="#00d4ff" stroke-width="1"/><circle cx="18" cy="22" r="4" fill="none" stroke="#00d4ff" stroke-width="1"/><circle cx="18" cy="22" r="1.5" fill="#00d4ff"/><line x1="42" y1="8" x2="42" y2="36" stroke="#1e2d42" stroke-width="1"/><text x="52" y="30" font-family="Space Mono,Courier New,monospace" font-size="20" font-weight="700" fill="#e2e8f0" letter-spacing="-0.5">I<tspan fill="#00d4ff">I</tspan>T</text><line x1="96" y1="8" x2="96" y2="36" stroke="#1e2d42" stroke-width="1"/><text x="104" y="20" font-family="Space Mono,Courier New,monospace" font-size="7" fill="#64748b" letter-spacing="2">INFRAESTRUCTURA</text><text x="104" y="32" font-family="Space Mono,Courier New,monospace" font-size="7" fill="#00d4ff" letter-spacing="3">IT · BOGOTÁ</text><circle cx="248" cy="22" r="3" fill="#00d4ff"/></svg></a>
   <ul class="nav-links">
-    <li><a href="index.html" >Inicio</a></li>
-    <li><a href="datacenter.html" >Datacenter</a></li>
-    <li><a href="solar.html" >Solar</a></li>
-    <li><a href="redes.html" class="active">Redes</a></li>
-    <li><a href="iot.html" >IoT</a></li>
-    <li><a href="ia.html" >IA</a></li>
-    <li><a href="casos.html" >Casos</a></li>
+    <li><a href="/index.html">Inicio</a></li>
+    <li><a href="/datacenter.html">Datacenter</a></li>
+    <li><a href="/solar.html">Solar</a></li>
+    <li><a href="/redes.html" class="active">Redes</a></li>
+    <li><a href="/iot.html">IoT</a></li>
+    <li><a href="/ia.html">IA</a></li>
+    <li><a href="/casos.html">Casos</a></li>
   </ul>
   <a href="mailto:contacto@infraestructura-it.com" class="nav-cta">Contacto</a>
 </nav>
+
 <section class="hero">
-  <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-  <div class="corner corner-bl"></div><div class="corner corner-br"></div>
-  <div class="hero-inner">
-    <div class="anim-wrap"><svg width="340" height="300" viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">
-  <defs><filter id="ng"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-  <!-- LINKS -->
-  <line class="link lk1" x1="170" y1="90"  x2="80"  y2="150" stroke="rgba(0,212,255,0.4)" stroke-width="1.2" stroke-dasharray="100" stroke-dashoffset="100"/>
-  <line class="link lk2" x1="170" y1="90"  x2="260" y2="150" stroke="rgba(0,212,255,0.4)" stroke-width="1.2" stroke-dasharray="100" stroke-dashoffset="100"/>
-  <line class="link lk3" x1="80"  y1="150" x2="60"  y2="230" stroke="rgba(0,212,255,0.3)" stroke-width="1"   stroke-dasharray="100" stroke-dashoffset="100"/>
-  <line class="link lk4" x1="80"  y1="150" x2="140" y2="240" stroke="rgba(0,212,255,0.3)" stroke-width="1"   stroke-dasharray="100" stroke-dashoffset="100"/>
-  <line class="link lk5" x1="260" y1="150" x2="200" y2="240" stroke="rgba(0,212,255,0.3)" stroke-width="1"   stroke-dasharray="100" stroke-dashoffset="100"/>
-  <line class="link lk6" x1="260" y1="150" x2="290" y2="230" stroke="rgba(0,212,255,0.3)" stroke-width="1"   stroke-dasharray="100" stroke-dashoffset="100"/>
-  <line class="link lk7" x1="80"  y1="150" x2="260" y2="150" stroke="rgba(0,255,200,0.2)" stroke-width="1"   stroke-dasharray="200" stroke-dashoffset="200"/>
-  <!-- NODES L2 -->
-  <circle class="node n3" cx="80"  cy="150" r="12" fill="#071520" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
-  <circle class="node n4" cx="260" cy="150" r="12" fill="#071520" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
-  <!-- NODES L3 -->
-  <circle class="node n5" cx="60"  cy="230" r="9" fill="#071520" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
-  <circle class="node n6" cx="140" cy="240" r="9" fill="#071520" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
-  <circle class="node n7" cx="200" cy="240" r="9" fill="#071520" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
-  <circle class="node n8" cx="290" cy="230" r="9" fill="#071520" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
-  <!-- CORE NODE -->
-  <circle class="node core" cx="170" cy="90" r="22" fill="#071520" stroke="rgba(0,212,255,0.8)" stroke-width="2" filter="url(#ng)"/>
-  <circle class="node core-inner" cx="170" cy="90" r="10" fill="rgba(0,212,255,0.15)" stroke="var(--accent)" stroke-width="1"/>
-  <circle class="node core-dot"   cx="170" cy="90" r="4"  fill="#00d4ff"/>
-  <!-- LABELS -->
-  <text class="lbl" x="170" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="rgba(0,212,255,0.6)" letter-spacing="1">CORE</text>
-  <text class="lbl" x="80"  y="170" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.5)" letter-spacing="1">SW-A</text>
-  <text class="lbl" x="260" y="170" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.5)" letter-spacing="1">SW-B</text>
-  <text class="lbl" x="60"  y="252" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.4)">AP</text>
-  <text class="lbl" x="140" y="262" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.4)">SRV</text>
-  <text class="lbl" x="200" y="262" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.4)">SRV</text>
-  <text class="lbl" x="290" y="252" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="rgba(0,212,255,0.4)">AP</text>
-  <!-- PACKET ANIMATION -->
-  <circle class="packet pk1" r="3" fill="#00d4ff"/>
-  <circle class="packet pk2" r="3" fill="#00ffcc"/>
-</svg></div>
-    <p class="hero-label">// Networking · Infraestructura</p>
-    <h1 class="hero-title">Redes<br><span>Empresariales</span></h1>
-    <p class="hero-sub">LAN · WAN · WiFi corporativo · VLAN · VPN<br>Cableado estructurado · Certificación Fluke.</p>
-    <div class="hero-cta">
-      <a href="casos.html" class="btn-primary">Ver proyectos</a>
-      <a href="mailto:contacto@infraestructura-it.com" class="btn-outline">Cotizar</a>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-chip">CORE SWITCH · UPLINK 10G · LATENCIA 0.8ms</div>
+  <h1>Redes<br><em>Empresariales</em></h1>
+  <p class="hero-sub">
+    Diseño e implementación de redes LAN, WAN y WiFi para empresas en Colombia.
+    Cableado estructurado certificado, switching administrable, firewall y soporte NOC.
+  </p>
+  <div class="hero-ctas">
+    <a href="mailto:contacto@infraestructura-it.com?subject=Cotización%20Redes" class="btn-primary">Solicitar diagnóstico</a>
+    <a href="/casos.html" class="btn-outline">Ver proyectos</a>
+  </div>
+  <p class="hero-status">CORE-SW-01 <span>ONLINE</span> · PUERTOS: <span>48/48</span> · UPLINK <span>10G</span> · BOGOTÁ, CO</p>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">+5.000</div><div class="stat-label">Puntos de red instalados</div></div>
+  <div class="stat-item"><div class="stat-num">+80</div><div class="stat-label">Proyectos de red</div></div>
+  <div class="stat-item"><div class="stat-num">10G</div><div class="stat-label">Backbone máximo</div></div>
+  <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">NOC y soporte</div></div>
+</div>
+
+<section>
+  <div class="section-head">
+    <p class="section-tag">// Servicios · Redes</p>
+    <h2 class="section-title">Conectividad sin<br>puntos de falla</h2>
+    <p class="section-sub">Desde el patch panel hasta el edge WAN. Redes diseñadas para crecer, monitoreadas para no fallar.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-icon">🔗</div>
+      <h3>Cableado estructurado</h3>
+      <p>Certificación Cat6A (10G) y fibra óptica OM4/OS2. Instalación bajo norma ANSI/TIA-568, etiquetado, patch panels y certificación Fluke DSX-8000.</p>
+      <div class="svc-tags"><span class="tag accent">TIA-568 certificado</span><span class="tag">Cat6A · OM4</span><span class="tag">Fluke DSX-8000</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">🔀</div>
+      <h3>Switching administrable</h3>
+      <p>Switches L2/L3 con VLANs, QoS, RSTP, LACP y gestión centralizada. Segmentación de redes por área, priorización de tráfico crítico y monitoreo SNMP.</p>
+      <div class="svc-tags"><span class="tag accent">VLAN · QoS</span><span class="tag">L2/L3</span><span class="tag">Cisco · Ubiquiti</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">📶</div>
+      <h3>WiFi empresarial</h3>
+      <p>Cobertura WiFi 6 (802.11ax) con controladora centralizada, itinerancia sin cortes (802.11r/k/v), portal cautivo y segmentación por perfil de usuario.</p>
+      <div class="svc-tags"><span class="tag accent">WiFi 6</span><span class="tag">802.11ax</span><span class="tag">Ubiquiti · Ruckus</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">🛡️</div>
+      <h3>Firewall y seguridad</h3>
+      <p>Perímetro con firewall NGFW: inspección DPI, IPS/IDS, filtrado de contenido, VPN site-to-site y cliente. Políticas por zona y auditoría de accesos.</p>
+      <div class="svc-tags"><span class="tag accent">NGFW · IPS/IDS</span><span class="tag">VPN IPsec</span><span class="tag">Fortinet · pfSense</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">🌐</div>
+      <h3>SD-WAN y WAN</h3>
+      <p>Enlace primario + failover automático (fibra + LTE). SD-WAN para selección de ruta inteligente, QoS por aplicación y visibilidad de uso de ancho de banda.</p>
+      <div class="svc-tags"><span class="tag accent">Failover automático</span><span class="tag">SD-WAN</span><span class="tag">LTE backup</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-icon">📊</div>
+      <h3>NOC y monitoreo</h3>
+      <p>Plataforma de monitoreo de red 24/7: disponibilidad de equipos, utilización de interfaces, alertas proactivas y tickets de incidencia. Dashboard por cliente.</p>
+      <div class="svc-tags"><span class="tag accent">24/7 NOC</span><span class="tag">SNMP · NetFlow</span><span class="tag">Zabbix · LibreNMS</span></div>
     </div>
   </div>
-  <div class="status-bar"><div class="status-dot"></div>CORE SW ONLINE · LATENCIA: 0.4ms · 99.99%</div>
+
+  <div style="margin-top:2.5rem;">
+    <p class="section-tag">// Marcas certificadas</p>
+    <div class="brands-row">
+      <span class="brand-pill">Cisco</span>
+      <span class="brand-pill">Ubiquiti UniFi</span>
+      <span class="brand-pill">Fortinet</span>
+      <span class="brand-pill">Ruckus</span>
+      <span class="brand-pill">MikroTik</span>
+      <span class="brand-pill">Panduit</span>
+      <span class="brand-pill">Commscope</span>
+      <span class="brand-pill">Belden</span>
+    </div>
+  </div>
 </section>
+
+<section>
+  <div class="section-head">
+    <p class="section-tag">// Proceso · Proyecto de Red</p>
+    <h2 class="section-title">Diagnóstico a red<br>certificada en 5 pasos</h2>
+    <p class="section-sub">Metodología probada en +80 proyectos. Entrega con planos, certificaciones Fluke y manual de operación.</p>
+  </div>
+  <div class="proceso-grid">
+    <div class="proceso-item"><div class="proceso-num">01 · Diagnóstico</div><h4>Auditoría de red actual</h4><p>Escaneo de topología, análisis de tráfico, identificación de cuellos de botella y reporte de vulnerabilidades.</p></div>
+    <div class="proceso-item"><div class="proceso-num">02 · Diseño</div><h4>Arquitectura de red</h4><p>Diagrama lógico y físico, segmentación VLAN, direccionamiento IP, selección de equipos y presupuesto.</p></div>
+    <div class="proceso-item"><div class="proceso-num">03 · Suministro</div><h4>Equipos y materiales</h4><p>Adquisición de switches, APs, firewall, canaletas, cable Cat6A/fibra con trazabilidad completa.</p></div>
+    <div class="proceso-item"><div class="proceso-num">04 · Instalación</div><h4>Montaje y configuración</h4><p>Tendido de cableado, certificación por punto, configuración de VLANs, QoS, VPN y firewall.</p></div>
+    <div class="proceso-item"><div class="proceso-num">05 · Entrega</div><h4>Documentación y soporte</h4><p>Planos as-built, informe de certificación Fluke, contraseñas, activación de monitoreo NOC.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <p class="section-tag">// Especificaciones · Referencia</p>
+    <h2 class="section-title">Capacidades técnicas</h2>
+    <p class="section-sub">Estándares y tecnologías que IIT implementa en proyectos de redes empresariales en Colombia.</p>
+  </div>
+  <table class="specs-table">
+    <thead><tr><th>Capa / Servicio</th><th>Tecnología</th><th>Estándar / Protocolo</th></tr></thead>
+    <tbody>
+      <tr><td>Cableado horizontal</td><td><span class="val">Cat6A UTP/FTP · 10GBase-T</span></td><td>ANSI/TIA-568.2-D</td></tr>
+      <tr><td>Cableado backbone</td><td><span class="val">OM4 multimodo · OS2 monomodo</span></td><td>ANSI/TIA-568.3-D</td></tr>
+      <tr><td>Switching LAN</td><td><span class="val">L2/L3 · 1G/10G · PoE++</span></td><td>IEEE 802.1Q · 802.3at/bt</td></tr>
+      <tr><td>WiFi</td><td><span class="val">WiFi 6 · 2.4/5/6 GHz</span></td><td>IEEE 802.11ax</td></tr>
+      <tr><td>Seguridad perimetral</td><td><span class="val">NGFW · IPS · DPI · VPN</span></td><td>IPsec · SSL/TLS 1.3</td></tr>
+      <tr><td>WAN / SD-WAN</td><td><span class="val">Fibra + LTE failover</span></td><td>BGP · OSPF · DMVPN</td></tr>
+      <tr><td>Monitoreo</td><td><span class="val">Zabbix · LibreNMS · PRTG</span></td><td>SNMP v3 · NetFlow v9</td></tr>
+      <tr><td>Certificación puntos</td><td><span class="val">Fluke DSX-8000</span></td><td>ISO/IEC 11801 · TIA-568</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section style="border-bottom:none;">
+  <div class="cta-block">
+    <div>
+      <h3>¿Tu red está ralentizando el negocio?</h3>
+      <p>Hacemos un diagnóstico gratuito y te entregamos un informe con las mejoras prioritarias.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="mailto:contacto@infraestructura-it.com?subject=Diagnóstico%20de%20Red" class="btn-primary">Diagnóstico gratuito</a>
+      <a href="/casos.html" class="btn-outline">Ver proyectos</a>
+    </div>
+  </div>
+</section>
+
 <footer>
-  &copy; 2026 INFRAESTRUCTURA-IT &nbsp;·&nbsp; BOGOTÁ, COLOMBIA &nbsp;·&nbsp;
-  <a href="mailto:contacto@infraestructura-it.com">contacto@infraestructura-it.com</a>
+  <span>© 2026 Infraestructura-IT · Bogotá, Colombia</span>
+  <span><a href="mailto:contacto@infraestructura-it.com">contacto@infraestructura-it.com</a></span>
 </footer>
 </body>
 </html>
